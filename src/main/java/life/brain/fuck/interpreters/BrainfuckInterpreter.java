@@ -1,7 +1,7 @@
 package life.brain.fuck.interpreters;
 
-import life.brain.fuck.exceptions.BrainFuckUncorrectSourceException;
-import life.brain.fuck.interpreters.Context.SimpeContext;
+import life.brain.fuck.exceptions.BrainFuckException;
+import life.brain.fuck.interpreters.context.Context;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class BrainfuckInterpreter {
 
     Logger logger = Logger.getLogger(this.getClass().getName());
 
-    private SimpeContext context = new SimpeContext();
+    private Context context;
     private String currentSource;
     private List<String> sourceLines = new ArrayList<String>();
 
@@ -24,24 +24,32 @@ public class BrainfuckInterpreter {
 
     }
 
-    public void setProgramm(String programm) {
-
-        this.sourceLines.add(programm);
-
-        this.currentSource = sourceLines.get(0);
+    public BrainfuckInterpreter(String _programm) throws BrainFuckException {
+        this.setProgramm(_programm);
     }
 
-    public void setProgramm(ArrayList<String> programm) {
+    public BrainfuckInterpreter(ArrayList<String> _programm) throws BrainFuckException {
+        this.setProgramm(_programm);
+    }
+
+
+    public void setProgramm(String programm) throws BrainFuckException {
+        this.sourceLines.add(programm);
+
+        this.checkSourceCodeCases();
+    }
+
+    public void setProgramm(ArrayList<String> programm) throws BrainFuckException {
         programm.clear();
 
         programm.stream().forEach(sourceLine -> {
             this.sourceLines.add(sourceLine);
         });
 
-        this.currentSource = sourceLines.get(0);
+        this.checkSourceCodeCases();
     }
 
-    public void checkSourceCodeCases() throws BrainFuckUncorrectSourceException {
+    public void checkSourceCodeCases() throws BrainFuckException {
         Stack<Character> cases = new Stack<>();
         try {
             for (String sourceLine : this.sourceLines) {
@@ -56,10 +64,8 @@ public class BrainfuckInterpreter {
                         case ']': {
                             try {
                                 Character prevCommand = cases.pop();
-
-                                if (!prevCommand.equals('[')) cases.pop();
                             } catch (EmptyStackException e) {
-                                throw new BrainFuckUncorrectSourceException();
+                                throw new BrainFuckException();
                             }
                         }
                         default: {
@@ -69,10 +75,21 @@ public class BrainfuckInterpreter {
                 }
             }
 
-            if (cases.size() != 0) throw new BrainFuckUncorrectSourceException();
-        } catch (BrainFuckUncorrectSourceException e) {
+            if (cases.size() != 0) throw new BrainFuckException();
+        } catch (BrainFuckException e) {
             logger.error(e.getMessage());
             throw e;
+        }
+    }
+
+    public void setContext(Context context) { this.context = context; }
+    public Context getContext() { return this.context; }
+
+    public void runProgramm() {
+        for (String code:
+             this.sourceLines) {
+            this.context.setCurrentSource(code);
+            this.context.processProgram();
         }
     }
 }

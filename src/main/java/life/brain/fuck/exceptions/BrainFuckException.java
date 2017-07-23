@@ -3,19 +3,19 @@ package life.brain.fuck.exceptions;
 /**
  * Created by roman on 20.07.17.
  */
-public class BrainFuckUncorrectSourceException extends Exception {
+public class BrainFuckException extends Exception {
     private String message = "uncorrect source code";
     private byte[] interpreterCast;
 
-    public BrainFuckUncorrectSourceException(String message) {
+    public BrainFuckException(String message) {
         this.message = message;
     }
 
-    public BrainFuckUncorrectSourceException() {
+    public BrainFuckException() {
 
     }
 
-    public BrainFuckUncorrectSourceException(byte[] interpreterCast) {
+    public BrainFuckException(byte[] interpreterCast) {
         this.interpreterCast = interpreterCast;
     }
 

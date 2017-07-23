@@ -1,6 +1,4 @@
-package life.brain.fuck.interpreters.Context;
-
-import java.util.List;
+package life.brain.fuck.interpreters.context;
 
 /**
  * Created by roman on 21.07.17.
@@ -20,7 +18,6 @@ public interface Context {
     public Integer getProgramCursor();
     public void setProgramCursor(Integer programCursor);
     public Byte getCurrentValue();
-    public void step(Character command);
     public void addToOutput();
 
 }
