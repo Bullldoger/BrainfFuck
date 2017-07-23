@@ -52,14 +52,14 @@ public class BrainfuckInterpreter {
 
 
     public void setProgramm(String programm) throws BrainFuckException {
+        this.sourceLines.clear();
         this.sourceLines.add(programm);
 
         this.checkSourceCodeCases();
     }
 
     public void setProgramm(ArrayList<String> programm) throws BrainFuckException {
-        programm.clear();
-
+        this.sourceLines.clear();
         programm.stream().forEach(sourceLine -> {
             this.sourceLines.add(sourceLine);
         });
@@ -67,36 +67,39 @@ public class BrainfuckInterpreter {
         this.checkSourceCodeCases();
     }
 
+    public void addSource(String sourceCode) throws BrainFuckException {
+        this.sourceLines.add(sourceCode);
+        this.checkSourceCodeCases();
+    }
+
     public void checkSourceCodeCases() throws BrainFuckException {
         Stack<Character> cases = new Stack<>();
-        try {
-            for (String sourceLine : this.sourceLines) {
-                for (byte i = 0; i < sourceLine.length(); ++i) {
-                    char command = sourceLine.charAt(i);
 
-                    switch (command) {
-                        case '[': {
-                            cases.push(command);
-                            break;
+        for (String sourceLine : this.sourceLines) {
+            for (byte i = 0; i < sourceLine.length(); ++i) {
+                char command = sourceLine.charAt(i);
+
+                switch (command) {
+                    case '[': {
+                        cases.push(command);
+                        break;
+                    }
+                    case ']': {
+                        try {
+                            Character prevCommand = cases.pop();
+                        } catch (EmptyStackException e) {
+                            throw new BrainFuckException();
                         }
-                        case ']': {
-                            try {
-                                Character prevCommand = cases.pop();
-                            } catch (EmptyStackException e) {
-                                throw new BrainFuckException();
-                            }
-                        }
-                        default: {
-                            continue;
-                        }
+                    }
+                    default: {
+                        continue;
                     }
                 }
             }
-
-            if (cases.size() != 0) throw new BrainFuckException();
-        } catch (BrainFuckException e) {
-            throw e;
         }
+
+        if (cases.size() != 0) throw new BrainFuckException();
+
     }
 
     public Context getContext() {

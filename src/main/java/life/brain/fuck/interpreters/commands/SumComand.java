@@ -25,7 +25,7 @@ public class SumComand implements Command {
             throw new BrainFuckException();
         } else {
             this.context.positionToLeft();
-            Integer value = this.context.getCurrentValue().intValue();
+            Integer value = this.context.getCurrentValue();
             this.context.positionToRight();
 
             for(; value != 0; value--)

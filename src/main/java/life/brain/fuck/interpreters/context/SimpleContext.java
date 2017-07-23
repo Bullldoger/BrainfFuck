@@ -19,36 +19,35 @@ public class SimpleContext implements Context {
 
     Logger logger = Logger.getLogger(this.getClass().getName());
 
-    private OutputStreamWriter outputStreamWriter;
-    private InputStreamReader inputStreamReader;
-
-    private Byte[] context;
-
+    private Integer[] context;
+    private Integer contextSize = 30000;
     private Integer i;
     private Integer programCursor;
+
     private List<Integer> breakPointsPositions = new ArrayList<>();
     private List<String> output = new ArrayList<>();
+
     private Map<String, Command> methods = new HashMap<>();
     private Set<String> basicCommands = new HashSet<>();
-
     private List<Command> commands = new ArrayList<Command>();
+
     private String currentSource;
 
     public SimpleContext(Integer contextSize) {
-        context = new Byte[contextSize];
+        this.contextSize = contextSize;
 
         init();
 
-        for (int k = 0; k < contextSize; ++k)
+        for (int k = 0; k < this.contextSize; k++)
             this.context[k] = 0;
     }
 
     public SimpleContext() {
-        context = new Byte[30000];
+        context = new Integer[this.contextSize];
 
         init();
 
-        for (int k = 0; k < 30000; k++)
+        for (int k = 0; k < contextSize; k++)
             this.context[k] = 0;
     }
 
@@ -57,6 +56,9 @@ public class SimpleContext implements Context {
         this.output.clear();
         this.programCursor = 0;
         this.i = 0;
+
+        for (int k = 0; k < contextSize; k++)
+            this.context[k] = 0;
     }
 
     @Override
@@ -86,13 +88,16 @@ public class SimpleContext implements Context {
     }
 
     @Override
-    public void positionToRight() {
-        this.i += 1;
+    public void positionToRight() throws BrainFuckException {
+        if (this.i == this.contextSize - 1) throw new BrainFuckException();
+        else this.i += 1;
     }
 
     @Override
-    public void positionToLeft() {
-        this.i -= 1;
+    public void positionToLeft() throws BrainFuckException {
+
+        if (this.i == 0) throw new BrainFuckException();
+        else this.i -= 1;
     }
 
     public void incCurrentValue() {
@@ -114,7 +119,7 @@ public class SimpleContext implements Context {
     }
 
     @Override
-    public Byte getCurrentValue() {
+    public Integer getCurrentValue() {
         return this.context[this.getCurrentIndex()];
     }
 

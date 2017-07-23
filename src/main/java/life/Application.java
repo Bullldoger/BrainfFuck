@@ -4,16 +4,12 @@ package life;
  * Created by roman on 19.07.17.
  */
 
-import life.brain.fuck.exceptions.BrainFuckException;
-import life.brain.fuck.interpreters.BrainfuckInterpreter;
-import life.brain.fuck.interpreters.commands.MoveCommand;
-import life.brain.fuck.interpreters.commands.SumComand;
-import life.brain.fuck.interpreters.commands.ZeroCommand;
-import life.brain.fuck.interpreters.context.Context;
-import life.brain.fuck.interpreters.context.SimpleContext;
+import life.ui.BrainFuckPanel;
 import org.apache.log4j.Logger;
 
-public class Application    {
+import javax.swing.*;
+
+public class Application {
 
     Logger logger = Logger.getLogger(this.getClass().getName());
 
@@ -21,17 +17,19 @@ public class Application    {
         org.apache.log4j.BasicConfigurator.configure();
 
         try {
-            BrainfuckInterpreter brainfuckInterpreter = new BrainfuckInterpreter(true);
-            brainfuckInterpreter.setProgramm("++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.");
-            brainfuckInterpreter.runProgramm();
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-            for (String s:
-                 brainfuckInterpreter.getContext().getResult()) {
-                System.out.println(s);
+            BrainFuckPanel brainFuckPanel = new BrainFuckPanel();
+            brainFuckPanel.setVisible(true);
 
-            }
-        } catch (BrainFuckException e) {
-            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
         }
     }
 }

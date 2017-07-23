@@ -14,8 +14,8 @@ import java.util.List;
 public interface Context {
 
     public void processProgram() throws BrainFuckException;
-    public void positionToRight();
-    public void positionToLeft();
+    public void positionToRight() throws BrainFuckException;
+    public void positionToLeft() throws BrainFuckException;
     public void incCurrentValue();
     public void decCurrentValue();
     public void setCurrentSource(String source);
@@ -26,5 +26,5 @@ public interface Context {
 
     public List<String> getResult();
     public Integer getCurrentIndex();
-    public Byte getCurrentValue();
+    public Integer getCurrentValue();
 }
