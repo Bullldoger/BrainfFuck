@@ -1,4 +1,4 @@
-package life.brain.fuck.interpreters.commands;
+package life.brain.fuck.interpreters.commands.interfaces;
 
 import life.brain.fuck.exceptions.BrainFuckException;
 

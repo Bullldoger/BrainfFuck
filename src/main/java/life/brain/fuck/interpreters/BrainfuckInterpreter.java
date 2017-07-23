@@ -1,7 +1,11 @@
 package life.brain.fuck.interpreters;
 
 import life.brain.fuck.exceptions.BrainFuckException;
+import life.brain.fuck.interpreters.commands.MoveCommand;
+import life.brain.fuck.interpreters.commands.SumComand;
+import life.brain.fuck.interpreters.commands.ZeroCommand;
 import life.brain.fuck.interpreters.context.Context;
+import life.brain.fuck.interpreters.context.SimpleContext;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -11,16 +15,30 @@ import java.util.Stack;
 
 /**
  * Created by roman on 20.07.17.
+ * <p>
+ * Базовый интерпретатор, возможна базовая конфигурация через конструктор
  */
 public class BrainfuckInterpreter {
 
     Logger logger = Logger.getLogger(this.getClass().getName());
 
     private Context context;
-    private String currentSource;
     private List<String> sourceLines = new ArrayList<String>();
 
-    public BrainfuckInterpreter() {
+    public BrainfuckInterpreter(Boolean autoBuild) {
+
+        if (autoBuild) {
+            this.context = new SimpleContext();
+
+            this.context.addCommand(new MoveCommand(this.context));
+            this.context.addCommand(new SumComand(this.context));
+            this.context.addCommand(new ZeroCommand(this.context));
+
+            this.context.init();
+
+        } else {
+
+        }
 
     }
 
@@ -77,17 +95,21 @@ public class BrainfuckInterpreter {
 
             if (cases.size() != 0) throw new BrainFuckException();
         } catch (BrainFuckException e) {
-            logger.error(e.getMessage());
             throw e;
         }
     }
 
-    public void setContext(Context context) { this.context = context; }
-    public Context getContext() { return this.context; }
+    public Context getContext() {
+        return this.context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
 
     public void runProgramm() throws BrainFuckException {
-        for (String code:
-             this.sourceLines) {
+        for (String code :
+                this.sourceLines) {
             this.context.setCurrentSource(code);
             this.context.processProgram();
         }

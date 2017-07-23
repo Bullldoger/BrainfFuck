@@ -1,7 +1,7 @@
 package life.brain.fuck.interpreters.context;
 
 import life.brain.fuck.exceptions.BrainFuckException;
-import life.brain.fuck.interpreters.commands.Command;
+import life.brain.fuck.interpreters.commands.interfaces.Command;
 import life.brain.fuck.utils.Pair;
 import org.apache.log4j.Logger;
 
@@ -11,6 +11,9 @@ import java.util.*;
 
 /**
  * Created by roman on 21.07.17.
+ *
+ * Базовые контекст, реализующий основные возможности
+ *
  */
 public class SimpleContext implements Context {
 
@@ -64,17 +67,17 @@ public class SimpleContext implements Context {
 
     @Override
     public void addToOutput() {
-        logger.info(String.format("array[%d] = %d", this.i, this.getCurrentValue()));
+        this.output.add(String.format("array[%d] = %d", this.i, this.getCurrentValue()));
+    }
+
+    @Override
+    public List<String> getResult() {
+        return this.output;
     }
 
     @Override
     public void addCommand(Command command) {
         this.commands.add(command);
-    }
-
-    @Override
-    public void setIndexPosition(Integer position) {
-        this.i = position;
     }
 
     @Override
@@ -101,18 +104,8 @@ public class SimpleContext implements Context {
     }
 
     @Override
-    public String getCurrentSource() {
-        return this.currentSource;
-    }
-
-    @Override
     public void setCurrentSource(String source) {
         this.currentSource = source;
-    }
-
-    @Override
-    public Integer getProgramCursor() {
-        return this.programCursor;
     }
 
     @Override
@@ -132,6 +125,7 @@ public class SimpleContext implements Context {
         basicCommands.add("<");
         basicCommands.add("[");
         basicCommands.add("]");
+        basicCommands.add(".");
 
         for (Command c:
              commands)
@@ -181,6 +175,10 @@ public class SimpleContext implements Context {
 
             if (basicCommands.contains(command)) {
                 switch (command) {
+                    case ".": {
+                        this.addToOutput();
+                        break;
+                    }
                     case "+": {
                         this.incCurrentValue();
                         break;

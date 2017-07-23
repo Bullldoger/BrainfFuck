@@ -10,7 +10,7 @@ import org.junit.Test;
  */
 public class BrainfuckInterpreterTest {
 
-    BrainfuckInterpreter brainfuckInterpreter = new BrainfuckInterpreter();
+    BrainfuckInterpreter brainfuckInterpreter = new BrainfuckInterpreter(false);
     SimpleContext context = new SimpleContext();
 
     /*
