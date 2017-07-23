@@ -5,11 +5,14 @@ import life.brain.fuck.interpreters.context.Context;
 
 /**
  * Created by roman on 23.07.17.
+ *
+ * Сдвигает каретку на currentValue ячеек
+ *
  */
 public class MoveCommand implements Command {
 
     private Context context;
-    private Character command = '@';
+    private Character command = 'M';
 
     public MoveCommand(Context context) { this.context = context; }
 

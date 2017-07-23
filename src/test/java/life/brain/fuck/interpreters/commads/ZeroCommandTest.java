@@ -2,6 +2,7 @@ package life.brain.fuck.interpreters.commads;
 
 import life.brain.fuck.exceptions.BrainFuckException;
 import life.brain.fuck.interpreters.commands.MoveCommand;
+import life.brain.fuck.interpreters.commands.ZeroCommand;
 import life.brain.fuck.interpreters.context.Context;
 import life.brain.fuck.interpreters.context.SimpleContext;
 import org.junit.Assert;
@@ -10,38 +11,36 @@ import org.junit.Test;
 /**
  * Created by roman on 23.07.17.
  */
-public class MoveCommandTest {
+public class ZeroCommandTest {
 
     Context context = new SimpleContext();
     MoveCommand moveCommand;
-
 
     /**
      * Correct usage
      */
     @Test
-    public void MoveCommandFirstTest() throws BrainFuckException {
+    public void ZeroCommandFirstTest() throws BrainFuckException {
         org.apache.log4j.BasicConfigurator.configure();
 
-        context.addCommand(new MoveCommand(context));
-        context.setCurrentSource("++M--M");
+        context.addCommand(new ZeroCommand(context));
+        context.setCurrentSource("++++++Z");
         context.init();
         context.processProgram();
-        Assert.assertTrue(context.getCurrentIndex() == 0);
+        Assert.assertTrue(context.getCurrentValue() == 0);
     }
 
     /**
-     * Uncorrect usage invoke BrainFuckException
-     * @throws BrainFuckException
+     * Correct usage
      */
-    @Test(expected = BrainFuckException.class)
-    public void MoveCommandSecondTest() throws BrainFuckException {
+    @Test
+    public void ZeroCommandSecondTest() throws BrainFuckException {
         org.apache.log4j.BasicConfigurator.configure();
 
-        context.addCommand(new MoveCommand(context));
-        context.setCurrentSource("++M---M");
+        context.addCommand(new ZeroCommand(context));
+        context.setCurrentSource("-----Z");
         context.init();
         context.processProgram();
-        Assert.assertTrue(context.getCurrentIndex() == 0);
+        Assert.assertTrue(context.getCurrentValue() == 0);
     }
 }

@@ -45,7 +45,7 @@ public class SimpleContext implements Context {
 
         init();
 
-        for (int k = 0; k < 30000; ++k)
+        for (int k = 0; k < 30000; k++)
             this.context[k] = 0;
     }
 
