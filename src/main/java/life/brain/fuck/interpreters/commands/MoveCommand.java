@@ -25,7 +25,7 @@ public class MoveCommand implements Command {
             steps = Math.abs(steps);
 
             if (steps > this.context.getCurrentIndex())
-                throw new BrainFuckException("Array out of Bounds");
+                throw new BrainFuckException();
 
             for (; steps > 0; steps--)
                 this.context.positionToLeft();

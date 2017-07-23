@@ -13,8 +13,6 @@ import org.junit.Test;
 public class MoveCommandTest {
 
     Context context = new SimpleContext();
-    MoveCommand moveCommand;
-
 
     /**
      * Correct usage
