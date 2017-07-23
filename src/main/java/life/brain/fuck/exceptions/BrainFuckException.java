@@ -5,7 +5,6 @@ package life.brain.fuck.exceptions;
  */
 public class BrainFuckException extends Exception {
     private String message = "Unhandled exception";
-    private byte[] interpreterCast;
 
     public BrainFuckException(String message) {
         this.message = message;
@@ -13,10 +12,6 @@ public class BrainFuckException extends Exception {
 
     public BrainFuckException() {
 
-    }
-
-    public BrainFuckException(byte[] interpreterCast) {
-        this.interpreterCast = interpreterCast;
     }
 
     public String getMessage() {
