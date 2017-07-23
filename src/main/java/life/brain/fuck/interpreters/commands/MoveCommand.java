@@ -2,7 +2,7 @@ package life.brain.fuck.interpreters.commands;
 
 import life.brain.fuck.exceptions.BrainFuckException;
 import life.brain.fuck.interpreters.commands.interfaces.Command;
-import life.brain.fuck.interpreters.context.Context;
+import life.brain.fuck.interpreters.context.interfaces.Context;
 
 /**
  * Created by roman on 23.07.17.

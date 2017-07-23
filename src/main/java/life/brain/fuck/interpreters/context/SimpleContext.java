@@ -2,11 +2,10 @@ package life.brain.fuck.interpreters.context;
 
 import life.brain.fuck.exceptions.BrainFuckException;
 import life.brain.fuck.interpreters.commands.interfaces.Command;
+import life.brain.fuck.interpreters.context.interfaces.Context;
 import life.brain.fuck.utils.Pair;
 import org.apache.log4j.Logger;
 
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.*;
 
 /**

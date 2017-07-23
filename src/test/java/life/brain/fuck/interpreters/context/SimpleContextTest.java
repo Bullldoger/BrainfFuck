@@ -1,6 +1,7 @@
 package life.brain.fuck.interpreters.context;
 
 import life.brain.fuck.exceptions.BrainFuckException;
+import life.brain.fuck.interpreters.context.interfaces.Context;
 import org.junit.Assert;
 import org.junit.Test;
 

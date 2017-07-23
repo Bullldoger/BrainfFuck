@@ -3,7 +3,7 @@ package life.brain.fuck.interpreters.commads;
 import life.brain.fuck.exceptions.BrainFuckException;
 import life.brain.fuck.interpreters.commands.MoveCommand;
 import life.brain.fuck.interpreters.commands.ZeroCommand;
-import life.brain.fuck.interpreters.context.Context;
+import life.brain.fuck.interpreters.context.interfaces.Context;
 import life.brain.fuck.interpreters.context.SimpleContext;
 import org.junit.Assert;
 import org.junit.Test;

@@ -4,7 +4,7 @@ import life.brain.fuck.exceptions.BrainFuckException;
 import life.brain.fuck.interpreters.commands.MoveCommand;
 import life.brain.fuck.interpreters.commands.SumComand;
 import life.brain.fuck.interpreters.commands.ZeroCommand;
-import life.brain.fuck.interpreters.context.Context;
+import life.brain.fuck.interpreters.context.interfaces.Context;
 import life.brain.fuck.interpreters.context.SimpleContext;
 import org.apache.log4j.Logger;
 
