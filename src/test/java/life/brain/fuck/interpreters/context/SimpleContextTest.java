@@ -1,5 +1,6 @@
 package life.brain.fuck.interpreters.context;
 
+import life.brain.fuck.exceptions.BrainFuckException;
 import life.brain.fuck.interpreters.context.Context;
 import life.brain.fuck.interpreters.context.SimpleContext;
 import org.junit.Assert;
@@ -13,7 +14,7 @@ public class SimpleContextTest {
     Context context = new SimpleContext();
 
     @Test
-    public void SimpleContextTestFirstTest() {
+    public void SimpleContextTestFirstTest() throws BrainFuckException {
         org.apache.log4j.BasicConfigurator.configure();
 
         context.setCurrentSource("++[>++<-]>(2^2)");
@@ -23,7 +24,7 @@ public class SimpleContextTest {
     }
 
     @Test
-    public void SimpleContextTestSecondTest() {
+    public void SimpleContextTestSecondTest() throws BrainFuckException {
         org.apache.log4j.BasicConfigurator.configure();
 
         context.setCurrentSource("++[>++[>++[>++<-]<-]<-]>>>(2^4)");
@@ -33,7 +34,7 @@ public class SimpleContextTest {
     }
 
     @Test
-    public void SimpleContextTestThirdTest() {
+    public void SimpleContextTestThirdTest() throws BrainFuckException {
         org.apache.log4j.BasicConfigurator.configure();
 
         context.setCurrentSource("+++++(5)>+++++++(7)[>+<-]<[>>+<<-]>>");

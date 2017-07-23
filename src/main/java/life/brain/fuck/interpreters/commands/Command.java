@@ -5,12 +5,12 @@ import life.brain.fuck.exceptions.BrainFuckException;
 /**
  * Created by roman on 21.07.17.
  *
- * Интерфейс команды, тип T -
+ * Интерфейс команды, 2 основных метода для реализации
  *
  */
 public interface Command {
 
-    public void interpret();
+    public void interpret() throws BrainFuckException;
     public Character getCommand();
 
 }

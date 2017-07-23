@@ -85,7 +85,7 @@ public class BrainfuckInterpreter {
     public void setContext(Context context) { this.context = context; }
     public Context getContext() { return this.context; }
 
-    public void runProgramm() {
+    public void runProgramm() throws BrainFuckException {
         for (String code:
              this.sourceLines) {
             this.context.setCurrentSource(code);
