@@ -13,7 +13,7 @@ import life.brain.fuck.interpreters.context.interfaces.Context;
 public class ZeroCommand implements Command {
 
     private Context context;
-    private Character command = 'Z';
+    private String command = "Z";
 
     public ZeroCommand(Context context) { this.context = context; }
 
@@ -32,7 +32,7 @@ public class ZeroCommand implements Command {
     }
 
     @Override
-    public Character getCommand() {
+    public String getCommand() {
         return this.command;
     }
 }

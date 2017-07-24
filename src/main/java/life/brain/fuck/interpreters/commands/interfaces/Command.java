@@ -11,6 +11,6 @@ import life.brain.fuck.exceptions.BrainFuckException;
 public interface Command {
 
     public void interpret() throws BrainFuckException;
-    public Character getCommand();
+    public String getCommand();
 
 }

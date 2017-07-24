@@ -13,7 +13,7 @@ import life.brain.fuck.interpreters.context.interfaces.Context;
 public class MoveCommand implements Command {
 
     private Context context;
-    private Character command = 'M';
+    private String command = "M";
 
     public MoveCommand(Context context) { this.context = context; }
 
@@ -36,7 +36,7 @@ public class MoveCommand implements Command {
     }
 
     @Override
-    public Character getCommand() {
+    public String getCommand() {
         return this.command;
     }
 }

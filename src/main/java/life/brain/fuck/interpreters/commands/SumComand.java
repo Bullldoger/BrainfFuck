@@ -11,7 +11,7 @@ import life.brain.fuck.interpreters.context.interfaces.Context;
  */
 public class SumComand implements Command {
 
-    private Character command = 'S';
+    private String command = "S";
     private Context context;
 
     public SumComand(Context context) { this.context = context; }
@@ -34,7 +34,7 @@ public class SumComand implements Command {
     }
 
     @Override
-    public Character getCommand() {
+    public String getCommand() {
         return this.command;
     }
 }

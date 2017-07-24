@@ -216,9 +216,22 @@ public class SimpleContext implements Context {
                     default:
                         continue;
                 }
-            } else if (this.methods.containsKey(command)) {
-                Command cmd = this.methods.get(command);
-                cmd.interpret();
+            } else {
+                List<String> tempCommands = new ArrayList<>();
+
+                for (String key:
+                        this.methods.keySet())
+                    if (key.indexOf(command) == 0) tempCommands.add(key);
+
+                for (String key:
+                        tempCommands) {
+
+                    String cmd = subSource.substring(this.programCursor, this.programCursor + key.length());
+
+                    if (key.equals(cmd))
+                        this.methods.get(key).interpret();
+
+                }
             }
         }
     }
