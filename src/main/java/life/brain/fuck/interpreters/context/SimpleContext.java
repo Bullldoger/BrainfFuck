@@ -231,6 +231,7 @@ public class SimpleContext implements Context {
                     if (key.equals(cmd))
                         this.methods.get(key).interpret();
 
+                    this.programCursor += key.length() - 1;
                 }
             }
         }

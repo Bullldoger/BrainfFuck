@@ -25,7 +25,6 @@ public class BrainfuckInterpreterTest {
         brainfuckInterpreter.runProgramm();
 
         Assert.assertTrue(brainfuckInterpreter.getContext().getCurrentValue() == 2);
-
     }
 
     /*
@@ -40,6 +39,5 @@ public class BrainfuckInterpreterTest {
         brainfuckInterpreter.runProgramm();
 
         Assert.assertTrue(brainfuckInterpreter.getContext().getCurrentValue() == 4);
-
     }
 }

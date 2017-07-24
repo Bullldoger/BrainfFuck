@@ -18,6 +18,7 @@ public class SimpleContextTest {
 
         context.setCurrentSource("++[>++<-]>(2^2)");
         context.processProgram();
+
         int x = context.getCurrentIndex();
         Assert.assertTrue(context.getCurrentValue() == 4);
     }
