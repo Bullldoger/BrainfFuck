@@ -14,7 +14,9 @@ public class PrintCommand implements Command {
     private String command = "PRINT";
     private Context context;
 
-    public PrintCommand(Context context) { this.context = context; }
+    public PrintCommand(Context context)   {
+        this.context = context;
+    }
 
 
     @Override

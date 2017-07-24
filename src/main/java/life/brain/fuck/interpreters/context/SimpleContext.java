@@ -132,8 +132,8 @@ public class SimpleContext implements Context {
         basicCommands.add(".");
 
         for (Command c:
-             commands)
-            this.methods.put(String.valueOf(c.getCommand()), c);
+             this.commands)
+            this.methods.put(c.getCommand(), c);
 
     }
 
