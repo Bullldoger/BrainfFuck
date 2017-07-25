@@ -23,7 +23,7 @@ public class BrainfuckInterpreter {
     Logger logger = Logger.getLogger(this.getClass().getName());
 
     private Context context;
-    private List<String> sourceLines = new ArrayList<String>();
+    private List<String> sources = new ArrayList<String>();
 
     public BrainfuckInterpreter(Boolean autoBuild) {
 
@@ -42,40 +42,40 @@ public class BrainfuckInterpreter {
 
     }
 
-    public BrainfuckInterpreter(String _programm) throws BrainFuckException {
-        this.setProgramm(_programm);
+    public BrainfuckInterpreter(String source) throws BrainFuckException {
+        this.setProgramm(source);
     }
 
-    public BrainfuckInterpreter(ArrayList<String> _programm) throws BrainFuckException {
-        this.setProgramm(_programm);
+    public BrainfuckInterpreter(ArrayList<String> sources) throws BrainFuckException {
+        this.setProgramm(sources);
     }
 
 
     public void setProgramm(String programm) throws BrainFuckException {
-        this.sourceLines.clear();
-        this.sourceLines.add(programm);
+        this.sources.clear();
+        this.sources.add(programm);
 
         this.checkSourceCodeCases();
     }
 
     public void setProgramm(ArrayList<String> programm) throws BrainFuckException {
-        this.sourceLines.clear();
+        this.sources.clear();
         programm.stream().forEach(sourceLine -> {
-            this.sourceLines.add(sourceLine);
+            this.sources.add(sourceLine);
         });
 
         this.checkSourceCodeCases();
     }
 
     public void addSource(String sourceCode) throws BrainFuckException {
-        this.sourceLines.add(sourceCode);
+        this.sources.add(sourceCode);
         this.checkSourceCodeCases();
     }
 
     public void checkSourceCodeCases() throws BrainFuckException {
         Stack<Character> cases = new Stack<>();
 
-        for (String sourceLine : this.sourceLines) {
+        for (String sourceLine : this.sources) {
             for (byte i = 0; i < sourceLine.length(); ++i) {
                 char command = sourceLine.charAt(i);
 
@@ -112,9 +112,9 @@ public class BrainfuckInterpreter {
 
     public void runProgramm() throws BrainFuckException {
         for (String code :
-                this.sourceLines) {
-            this.context.setCurrentSource(code);
-            this.context.processProgram();
+                this.sources) {
+            this.context.setSource(code);
+            this.context.startProcess();
         }
     }
 }

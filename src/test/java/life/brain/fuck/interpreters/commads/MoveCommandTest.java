@@ -22,9 +22,9 @@ public class MoveCommandTest {
         org.apache.log4j.BasicConfigurator.configure();
 
         context.addCommand(new MoveCommand(context));
-        context.setCurrentSource("++M--M");
+        context.setSource("++M--M");
         context.init();
-        context.processProgram();
+        context.startProcess();
         Assert.assertTrue(context.getCurrentIndex() == 0);
     }
 
@@ -37,9 +37,9 @@ public class MoveCommandTest {
         org.apache.log4j.BasicConfigurator.configure();
 
         context.addCommand(new MoveCommand(context));
-        context.setCurrentSource("++M---M");
+        context.setSource("++M---M");
         context.init();
-        context.processProgram();
+        context.startProcess();
         Assert.assertTrue(context.getCurrentIndex() == 0);
     }
 }

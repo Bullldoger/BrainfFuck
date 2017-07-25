@@ -19,16 +19,16 @@ public class ZeroCommand implements Command {
 
 
     @Override
-    public void interpret() throws BrainFuckException {
+    public void runCommand() throws BrainFuckException {
         Integer currentValue = this.context.getCurrentValue().intValue();
 
         if (currentValue > 0)
             for (;currentValue != 0; currentValue--)
-                this.context.decCurrentValue();
+                this.context.decrementCurrentValue();
 
         else
             for (;currentValue != 0; currentValue++)
-                this.context.incCurrentValue();
+                this.context.incrementCurrentValue();
     }
 
     @Override

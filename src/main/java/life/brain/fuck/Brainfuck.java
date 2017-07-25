@@ -5,5 +5,4 @@ package life.brain.fuck;
  */
 public class Brainfuck {
 
-
 }

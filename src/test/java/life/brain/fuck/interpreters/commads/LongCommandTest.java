@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Created by roman on 24.07.17.
  */
-public class PrintCommandTest {
+public class LongCommandTest {
 
     Context context = new SimpleContext();
 
@@ -25,10 +25,9 @@ public class PrintCommandTest {
 
         context.addCommand(new PrintCommand(context));
         context.addCommand(new SumComand(context));
-        context.setCurrentSource("++>++S PRINT PRINT PRINT");
+        context.setSource("++>++S PRINT PRINT PRINT");
         context.init();
-        context.processProgram();
+        context.startProcess();
         Assert.assertTrue(context.getCurrentValue() == 4);
     }
-
 }

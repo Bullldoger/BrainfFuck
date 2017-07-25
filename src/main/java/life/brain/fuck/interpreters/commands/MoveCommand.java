@@ -18,7 +18,7 @@ public class MoveCommand implements Command {
     public MoveCommand(Context context) { this.context = context; }
 
     @Override
-    public void interpret() throws BrainFuckException {
+    public void runCommand() throws BrainFuckException {
         Integer steps = this.context.getCurrentValue().intValue();
 
         if (steps < 0) {
@@ -28,10 +28,10 @@ public class MoveCommand implements Command {
                 throw new BrainFuckException();
 
             for (; steps > 0; steps--)
-                this.context.positionToLeft();
+                this.context.indexToLeft();
         } else {
             for (; steps > 0; steps--)
-                this.context.positionToRight();
+                this.context.indexToRight();
         }
     }
 

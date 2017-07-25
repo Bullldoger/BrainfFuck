@@ -24,9 +24,9 @@ public class ZeroCommandTest {
         org.apache.log4j.BasicConfigurator.configure();
 
         context.addCommand(new ZeroCommand(context));
-        context.setCurrentSource("++++++Z");
+        context.setSource("++++++Z");
         context.init();
-        context.processProgram();
+        context.startProcess();
         Assert.assertTrue(context.getCurrentValue() == 0);
     }
 
@@ -38,9 +38,9 @@ public class ZeroCommandTest {
         org.apache.log4j.BasicConfigurator.configure();
 
         context.addCommand(new ZeroCommand(context));
-        context.setCurrentSource("-----Z");
+        context.setSource("-----Z");
         context.init();
-        context.processProgram();
+        context.startProcess();
         Assert.assertTrue(context.getCurrentValue() == 0);
     }
 }

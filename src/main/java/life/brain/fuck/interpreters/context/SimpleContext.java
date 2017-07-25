@@ -19,61 +19,61 @@ public class SimpleContext implements Context {
     Logger logger = Logger.getLogger(this.getClass().getName());
 
     private Integer[] context;
-    private Integer contextSize = 30000;
-    private Integer i;
+    private Integer CONTEXT_SIZE = 30000;
+    private Integer index;
     private Integer programCursor;
 
     private List<Integer> breakPointsPositions = new ArrayList<>();
-    private List<String> output = new ArrayList<>();
+    private List<String> results = new ArrayList<>();
 
-    private Map<String, Command> methods = new HashMap<>();
-    private Set<String> basicCommands = new HashSet<>();
-    private List<Command> commands = new ArrayList<Command>();
+    private List<Pair<String, Command>> profCommands = new ArrayList<>();
+    private Set<String> mainCommands = new HashSet<>();
+    private List<Command> commands = new ArrayList<>();
 
     private String currentSource;
 
     public SimpleContext(Integer contextSize) {
-        this.contextSize = contextSize;
+        this.CONTEXT_SIZE = contextSize;
 
         init();
 
-        for (int k = 0; k < this.contextSize; k++)
+        for (int k = 0; k < this.CONTEXT_SIZE; k++)
             this.context[k] = 0;
     }
 
     public SimpleContext() {
-        context = new Integer[this.contextSize];
+        context = new Integer[this.CONTEXT_SIZE];
 
         init();
 
-        for (int k = 0; k < contextSize; k++)
+        for (int k = 0; k < CONTEXT_SIZE; k++)
             this.context[k] = 0;
     }
 
     public void init() {
         this.refresh();
-        this.output.clear();
+        this.results.clear();
         this.programCursor = 0;
-        this.i = 0;
+        this.index = 0;
 
-        for (int k = 0; k < contextSize; k++)
+        for (int k = 0; k < CONTEXT_SIZE; k++)
             this.context[k] = 0;
     }
 
     @Override
-    public void processProgram() throws BrainFuckException {
+    public void startProcess() throws BrainFuckException {
         this.subSource(this.currentSource);
         logger.info("processing finished");
     }
 
     @Override
-    public void addToOutput() {
-        this.output.add(String.format("array[%d] = %d", this.i, this.getCurrentValue()));
+    public void print() {
+        this.results.add(String.format("array[%d] = %d", this.index, this.getCurrentValue()));
     }
 
     @Override
     public List<String> getResult() {
-        return this.output;
+        return this.results;
     }
 
     @Override
@@ -83,37 +83,37 @@ public class SimpleContext implements Context {
 
     @Override
     public Integer getCurrentIndex() {
-        return this.i;
+        return this.index;
     }
 
     @Override
-    public void positionToRight() throws BrainFuckException {
-        if (this.i == this.contextSize - 1) throw new BrainFuckException();
-        else this.i += 1;
+    public void indexToRight() throws BrainFuckException {
+        if (this.index == this.CONTEXT_SIZE - 1) throw new BrainFuckException();
+        else this.index += 1;
     }
 
     @Override
-    public void positionToLeft() throws BrainFuckException {
+    public void indexToLeft() throws BrainFuckException {
 
-        if (this.i == 0) throw new BrainFuckException();
-        else this.i -= 1;
+        if (this.index == 0) throw new BrainFuckException();
+        else this.index -= 1;
     }
 
-    public void incCurrentValue() {
-        this.context[this.i]++;
+    public void incrementCurrentValue() {
+        this.context[this.index]++;
     }
 
-    public void decCurrentValue() {
-        this.context[this.i]--;
+    public void decrementCurrentValue() {
+        this.context[this.index]--;
     }
 
     @Override
-    public void setCurrentSource(String source) {
+    public void setSource(String source) {
         this.currentSource = source;
     }
 
     @Override
-    public void setProgramCursor(Integer programCursor) {
+    public void setSourceCursor(Integer programCursor) {
         this.programCursor = programCursor;
     }
 
@@ -123,18 +123,44 @@ public class SimpleContext implements Context {
     }
 
     private void refresh() {
-        basicCommands.add("+");
-        basicCommands.add("-");
-        basicCommands.add(">");
-        basicCommands.add("<");
-        basicCommands.add("[");
-        basicCommands.add("]");
-        basicCommands.add(".");
+        mainCommands.add("+");
+        mainCommands.add("-");
+        mainCommands.add(">");
+        mainCommands.add("<");
+        mainCommands.add("[");
+        mainCommands.add("]");
+        mainCommands.add(".");
 
         for (Command c:
              this.commands)
-            this.methods.put(c.getCommand(), c);
+            this.profCommands.add(new Pair<String, Command>(c.getCommand(), c));
 
+        this.profCommands.sort(new Comparator<Pair<String, Command>>() {
+            @Override
+            public int compare(Pair<String, Command> t1, Pair<String, Command> t2) {
+                //Negative, if t1 < t2
+                //Positive, if t1 > t2
+                //Zero, if t1 == t2
+
+                boolean f = firstLessThenSecond(t1, t2);
+
+                if (f) return -1;
+                else return 1;
+            }
+
+            private boolean firstLessThenSecond(Pair<String, Command> t1, Pair<String, Command> t2) {
+
+                if (t1.getFirst().length() < t2.getFirst().length()) return false;
+                else if (t1.getFirst().length() > t2.getFirst().length()) return true;
+                else {
+                    boolean f = true;
+                    for (int i = 0; f && i < t1.getFirst().length(); ++i)
+                        f = (t1.getFirst().charAt(i) == t2.getFirst().charAt(i));
+
+                    return f;
+                }
+            }
+        });
     }
 
     private Pair<Integer, Integer> getSubBracketsCode(Integer startPositionm, String subSource) {
@@ -175,28 +201,28 @@ public class SimpleContext implements Context {
             String command = String.valueOf(subSource.charAt(programCursor));
 
             if (this.breakPointsPositions.contains(this.programCursor))
-                logger.info(String.format("array[%d] = %d", this.i, this.context[this.i]));
+                logger.info(String.format("array[%d] = %d", this.index, this.context[this.index]));
 
-            if (basicCommands.contains(command)) {
+            if (mainCommands.contains(command)) {
                 switch (command) {
                     case ".": {
-                        this.addToOutput();
+                        this.print();
                         break;
                     }
                     case "+": {
-                        this.incCurrentValue();
+                        this.incrementCurrentValue();
                         break;
                     }
                     case "-": {
-                        this.decCurrentValue();
+                        this.decrementCurrentValue();
                         break;
                     }
                     case ">": {
-                        this.positionToRight();
+                        this.indexToRight();
                         break;
                     }
                     case "<": {
-                        this.positionToLeft();
+                        this.indexToLeft();
                         break;
                     }
                     case "[": {
@@ -206,32 +232,32 @@ public class SimpleContext implements Context {
                         Integer startPosition = p.getFirst();
                         Integer finishPosition = p.getSecond();
 
-                        while (this.context[this.i] > 0) {
+                        while (this.context[this.index] > 0) {
                             String tempProc = subSource.substring(startPosition + 1, finishPosition);
                             this.subSource(tempProc);
                         }
 
-                        this.setProgramCursor(finishPosition);
+                        this.setSourceCursor(finishPosition);
                     }
                     default:
                         continue;
                 }
             } else {
+
                 List<String> tempCommands = new ArrayList<>();
 
-                for (String key:
-                        this.methods.keySet())
-                    if (key.indexOf(command) == 0) tempCommands.add(key);
+                for (Pair<String, Command> pair:
+                        this.profCommands) {
 
-                for (String key:
-                        tempCommands) {
+                    String COMMAND = pair.getFirst();
+                    Command commandObject = pair.getSecond();
 
-                    String cmd = subSource.substring(this.programCursor, this.programCursor + key.length());
+                    String cmd = subSource.substring(this.programCursor, this.programCursor + COMMAND.length());
+                    if (cmd.equals(COMMAND)) {
+                        commandObject.runCommand();
 
-                    if (key.equals(cmd))
-                        this.methods.get(key).interpret();
-
-                    this.programCursor += key.length() - 1;
+                        this.programCursor += COMMAND.length() - 1;
+                    }
                 }
             }
         }

@@ -17,19 +17,19 @@ public class SumComand implements Command {
     public SumComand(Context context) { this.context = context; }
 
     @Override
-    public void interpret() throws BrainFuckException {
+    public void runCommand() throws BrainFuckException {
 
         Integer index = this.context.getCurrentIndex();
 
         if (index < 1) {
             throw new BrainFuckException();
         } else {
-            this.context.positionToLeft();
+            this.context.indexToLeft();
             Integer value = this.context.getCurrentValue();
-            this.context.positionToRight();
+            this.context.indexToRight();
 
             for(; value != 0; value--)
-                this.context.incCurrentValue();
+                this.context.incrementCurrentValue();
         }
     }
 

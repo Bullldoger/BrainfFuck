@@ -20,7 +20,7 @@ public class PrintCommand implements Command {
 
 
     @Override
-    public void interpret() throws BrainFuckException {
+    public void runCommand() throws BrainFuckException {
         this.logger.info(this.context.getCurrentValue());
     }
 

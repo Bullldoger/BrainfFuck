@@ -16,8 +16,8 @@ public class SimpleContextTest {
     public void SimpleContextFirstTest() throws BrainFuckException {
         org.apache.log4j.BasicConfigurator.configure();
 
-        context.setCurrentSource("++[>++<-]>(2^2)");
-        context.processProgram();
+        context.setSource("++[>++<-]>(2^2)");
+        context.startProcess();
 
         int x = context.getCurrentIndex();
         Assert.assertTrue(context.getCurrentValue() == 4);
@@ -27,8 +27,8 @@ public class SimpleContextTest {
     public void SimpleContextSecondTest() throws BrainFuckException {
         org.apache.log4j.BasicConfigurator.configure();
 
-        context.setCurrentSource("++[>++[>++[>++<-]<-]<-]>>>(2^4)");
-        context.processProgram();
+        context.setSource("++[>++[>++[>++<-]<-]<-]>>>(2^4)");
+        context.startProcess();
 
         Assert.assertTrue(context.getCurrentValue() == 16);
     }
@@ -37,8 +37,8 @@ public class SimpleContextTest {
     public void SimpleContextThirdTest() throws BrainFuckException {
         org.apache.log4j.BasicConfigurator.configure();
 
-        context.setCurrentSource("+++++(5)>+++++++(7)[>+<-]<[>>+<<-]>>");
-        context.processProgram();
+        context.setSource("+++++(5)>+++++++(7)[>+<-]<[>>+<<-]>>");
+        context.startProcess();
 
         Assert.assertTrue(context.getCurrentValue() == 12);
     }

@@ -10,7 +10,10 @@ import life.brain.fuck.exceptions.BrainFuckException;
  */
 public interface Command {
 
-    public void interpret() throws BrainFuckException;
+    //Run command
+    public void runCommand() throws BrainFuckException;
+
+    //Command syntax
     public String getCommand();
 
 }

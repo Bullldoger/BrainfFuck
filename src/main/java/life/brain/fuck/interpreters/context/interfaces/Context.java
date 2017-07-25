@@ -14,18 +14,18 @@ import java.util.List;
 public interface Context {
 
     //BrainFuck basic operations
-    public void positionToRight() throws BrainFuckException;
-    public void positionToLeft() throws BrainFuckException;
-    public void incCurrentValue();
-    public void decCurrentValue();
-    public void addToOutput();
+    public void indexToRight() throws BrainFuckException;
+    public void indexToLeft() throws BrainFuckException;
+    public void incrementCurrentValue();
+    public void decrementCurrentValue();
+    public void print();
 
     //Programm start
-    public void processProgram() throws BrainFuckException;
+    public void startProcess() throws BrainFuckException;
 
     //Context preference
-    public void setCurrentSource(String source);
-    public void setProgramCursor(Integer programCursor);
+    public void setSource(String source);
+    public void setSourceCursor(Integer programCursor);
     public void addCommand(Command command);
     public void init();
 

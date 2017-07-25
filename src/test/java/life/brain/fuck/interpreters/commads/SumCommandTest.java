@@ -25,9 +25,9 @@ public class SumCommandTest {
         org.apache.log4j.BasicConfigurator.configure();
 
         context.addCommand(new SumComand(context));
-        context.setCurrentSource("++>++S");
+        context.setSource("++>++S");
         context.init();
-        context.processProgram();
+        context.startProcess();
         Assert.assertTrue(context.getCurrentValue() == 4);
     }
 
@@ -39,9 +39,9 @@ public class SumCommandTest {
         org.apache.log4j.BasicConfigurator.configure();
 
         context.addCommand(new SumComand(context));
-        context.setCurrentSource("++++>--S");
+        context.setSource("++++>--S");
         context.init();
-        context.processProgram();
+        context.startProcess();
         Assert.assertTrue(context.getCurrentValue() == 2);
     }
 
@@ -54,9 +54,9 @@ public class SumCommandTest {
         org.apache.log4j.BasicConfigurator.configure();
 
         context.addCommand(new SumComand(context));
-        context.setCurrentSource("++++S");
+        context.setSource("++++S");
         context.init();
-        context.processProgram();
+        context.startProcess();
         Assert.assertTrue(context.getCurrentValue() == 2);
     }
 }
