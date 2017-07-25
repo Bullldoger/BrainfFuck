@@ -142,10 +142,13 @@ public class SimpleContext implements Context {
                 //Positive, if t1 > t2
                 //Zero, if t1 == t2
 
-                boolean f = firstLessThenSecond(t1, t2);
+                if (t1 != null && t2 != null) {
+                    boolean f = firstLessThenSecond(t1, t2);
 
-                if (f) return -1;
-                else return 1;
+                    if (f) return -1;
+                    else return 1;
+
+                } else return -1;
             }
 
             private boolean firstLessThenSecond(Pair<String, Command> t1, Pair<String, Command> t2) {
