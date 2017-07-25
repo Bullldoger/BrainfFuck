@@ -15,7 +15,7 @@ import java.util.Stack;
 
 /**
  * Created by roman on 20.07.17.
- * <p>
+ *
  * Базовый интерпретатор, возможна базовая конфигурация через конструктор
  */
 public class BrainfuckInterpreter {
