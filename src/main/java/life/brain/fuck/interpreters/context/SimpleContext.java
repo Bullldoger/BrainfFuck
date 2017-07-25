@@ -196,69 +196,72 @@ public class SimpleContext implements Context {
     }
 
     private void subSource(String subSource) throws BrainFuckException {
-
         for (this.programCursor = 0; programCursor < subSource.length(); ++programCursor) {
             String command = String.valueOf(subSource.charAt(programCursor));
 
             if (this.breakPointsPositions.contains(this.programCursor))
                 logger.info(String.format("array[%d] = %d", this.index, this.context[this.index]));
 
-            if (mainCommands.contains(command)) {
-                switch (command) {
-                    case ".": {
-                        this.print();
-                        break;
-                    }
-                    case "+": {
-                        this.incrementCurrentValue();
-                        break;
-                    }
-                    case "-": {
-                        this.decrementCurrentValue();
-                        break;
-                    }
-                    case ">": {
-                        this.indexToRight();
-                        break;
-                    }
-                    case "<": {
-                        this.indexToLeft();
-                        break;
-                    }
-                    case "[": {
+            if (mainCommands.contains(command)) this.interpBasicCommand(subSource);
+            else this.interpProfCommand(subSource);
+        }
+    }
 
-                        Pair<Integer, Integer> p = this.getSubBracketsCode(this.programCursor, subSource);
+    private void interpBasicCommand(String subSource) throws BrainFuckException {
+        String command = String.valueOf(subSource.charAt(this.programCursor));
+        switch (command) {
+            case ".": {
+                this.print();
+                break;
+            }
+            case "+": {
+                this.incrementCurrentValue();
+                break;
+            }
+            case "-": {
+                this.decrementCurrentValue();
+                break;
+            }
+            case ">": {
+                this.indexToRight();
+                break;
+            }
+            case "<": {
+                this.indexToLeft();
+                break;
+            }
+            case "[": {
 
-                        Integer startPosition = p.getFirst();
-                        Integer finishPosition = p.getSecond();
+                Pair<Integer, Integer> p = this.getSubBracketsCode(this.programCursor, subSource);
 
-                        while (this.context[this.index] > 0) {
-                            String tempProc = subSource.substring(startPosition + 1, finishPosition);
-                            this.subSource(tempProc);
-                        }
+                Integer startPosition = p.getFirst();
+                Integer finishPosition = p.getSecond();
 
-                        this.setSourceCursor(finishPosition);
-                    }
-                    default:
-                        continue;
+                while (this.context[this.index] > 0) {
+                    String tempProc = subSource.substring(startPosition + 1, finishPosition);
+                    this.subSource(tempProc);
                 }
-            } else {
 
-                List<String> tempCommands = new ArrayList<>();
+                this.setSourceCursor(finishPosition);
+            }
+            default:
+                return;
+        }
+    }
 
-                for (Pair<String, Command> pair:
-                        this.profCommands) {
+    private void interpProfCommand(String subSource) throws BrainFuckException {
+        List<String> tempCommands = new ArrayList<>();
 
-                    String COMMAND = pair.getFirst();
-                    Command commandObject = pair.getSecond();
+        for (Pair<String, Command> pair:
+                this.profCommands) {
 
-                    String cmd = subSource.substring(this.programCursor, this.programCursor + COMMAND.length());
-                    if (cmd.equals(COMMAND)) {
-                        commandObject.runCommand();
+            String COMMAND = pair.getFirst();
+            Command commandObject = pair.getSecond();
 
-                        this.programCursor += COMMAND.length() - 1;
-                    }
-                }
+            String cmd = subSource.substring(this.programCursor, this.programCursor + COMMAND.length());
+            if (cmd.equals(COMMAND)) {
+                commandObject.runCommand();
+                this.programCursor += COMMAND.length() - 1;
             }
         }
     }
